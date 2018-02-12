@@ -2,14 +2,14 @@ var express = require('express')
 
 var app = express()
 
-// var connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'me',
-//   password: 'secret',
-//   database: 'my_db'
-// });
+var connection = mysql.createConnection({
+  host: 'db.c76o0nb7ihuq.eu-central-1.rds.amazonaws.com',
+  user: 'iSpiridonova',
+  password: 'iSpiridonova',
+  database: 'db'
+});
 
-// connection.connect();
+connection.connect();
 
 
  
@@ -20,14 +20,15 @@ app.get('/', function (req, res) {
 app.get('/:name', function (req, res) {
   res.send('Hello ' + req.params.name)
 })
-// app.get('/test_mysql_connection', function(req,res){
-//   connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-//     if (error){
-//       res.statusCode = 500;
-//       res.send(error);
-//     }
-//     res.send(results);
-//   });
-// })
+
+app.get('/test_mysql_connection', function(req,res){
+  connection.query('SELECT * FROM Grade', function (error, results, fields) {
+    if (error){
+      res.statusCode = 500;
+      res.send(error);
+    }
+    res.send(results);
+  });
+})
  
 app.listen(8081)
