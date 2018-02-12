@@ -1,4 +1,5 @@
 var express = require('express')
+var mysql = require('mysql')
 
 var app = express()
 
@@ -17,11 +18,11 @@ app.get('/', function (req, res) {
   res.send('Hello lgflf')
 })
 
-app.get('/:name', function (req, res) {
-  res.send('Hello ' + req.params.name)
-})
+// app.get('/:name', function (req, res) {
+//   res.send('Hello ' + req.params.name)
+// })
 
-app.get('/test_mysql_connection', function(req,res){
+app.get('/test', function(req,res){
   connection.query('SELECT * FROM Grade', function (error, results, fields) {
     if (error){
       res.statusCode = 500;
