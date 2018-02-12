@@ -29,6 +29,7 @@ app.get('/test', function(req,res){
       res.send(error);
     }
     res.send(results);
+    res.end();
   });
 })
  
