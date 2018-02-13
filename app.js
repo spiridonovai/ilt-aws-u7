@@ -31,8 +31,8 @@ app.get('/test', function(req,res){
   });
 })
 
-app.get('/api/months', function(req, res) {
-  connection.query("SELECT MESECI OD TABELA", function (error, results, fields) {
+app.get('/api/test_meseci', function(req, res) {
+  connection.query("SELECT * FROM UserTeam", function (error, results, fields) {
     if (error) {
       res.statusCode = 500;
       res.send(error);
