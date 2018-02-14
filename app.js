@@ -4,6 +4,11 @@ var connection = require('./connect')
 var path = require('path')
 app.use('/Scripts', express.static(path.join(__dirname + '/Scripts')));
 
+// app.use((req, res, next) => {
+//   res.append('Access-Control-Allow-Origin', ['*']);
+//   next();
+// });
+
 app.get('/login', function(req, res){
   res.sendFile(__dirname + '/Views/login.html');
 })
@@ -31,6 +36,49 @@ app.get('/test', function(req,res){
   });
 })
 
+app.get('/api/member/team', function(req, res){
+  connection.query('SELECT * FROM Team', function(error, results, fields){
+    if (error){
+      res.statusCode = 500;
+      res.send(error);
+    }
+    res.end(JSON.stringify(results));
+  });
+})
+
+app.get('/api/member/team/:id', function(req, res){
+  var q = 'SELECT * FROM User AS u JOIN UserTeam AS ut ON u.id=ut.FK_USER WHERE ut.FK_TEAM=?'
+  connection.query(q, [req.params.id], function(error, results, fields){
+    if (error){
+      res.statusCode = 500;
+      res.send(error);
+    }
+    res.send(results);
+  });
+})
+
+app.get('/api/member/team/:teamId/questions', function(req, res){
+  var q = 'SELECT * FROM Questions WHERE FK_TEAM=?'
+  connection.query(q, [req.params.teamId], function(error, results, fields){
+    if (error){
+      res.statusCode = 500;
+      res.send(error);
+    }
+    res.send(results);
+  });
+})
+
+app.post('/api/member/post', function(req, res){
+  var postData = JSON.stringify(req.body);
+  var str = JSON.parse(postData);
+  // if (error){
+  //   res.statusCode = 500;
+  //   res.send(error);
+  // }
+// prvoto value od jsonot shto ke mi go prati da bide kolku prasanja sledat!!!!!!!!!
+  console.log(str)
+  res.send(postData);
+})
 
 //7 irena
 //8 nikola
@@ -92,3 +140,6 @@ app.get('/api/questions/:team', function(req, res) {
 // })
 
 app.listen(8081)
+
+
+
