@@ -37,6 +37,7 @@ app.get('/test', function(req,res){
 //9 davor
 //10 team lead
 
+//site korisnici za eden tim
 app.get('/api/members/:team', function(req, res) {
   connection.query(`SELECT * FROM UserTeam WHERE FK_TEAM = ${req.params.team}`,
    function (error, results, fields) {
@@ -51,10 +52,25 @@ app.get('/api/members/:team', function(req, res) {
   });
 })
 
+//site prashanja za eden tim
+app.get('/api/questions/:team', function(req, res) {
+  connection.query(`SELECT * FROM Questions WHERE FK_TEAM = ${req.params.team}`,
+   function (error, results, fields) {
+    if (error) {
+      res.statusCode = 500;
+      res.send(error);
+    }
+    var arr = JSON.parse(JSON.stringify(results));
+    console.log(arr.map(a => a.question.toString()));
+    res.send(results);
+    res.end();
+  });
+})
+
 /************ nisho ne e testirano ************************/
 
-// app.get('/api/:date', function(req, res) {
-//   connection.query(`SELECT * FROM Vote WHERE EXTRACT(MONTH FROM date) = ${req.params.date}`,
+// app.get('/api/:date/:team', function(req, res) {
+//   connection.query(`SELECT * FROM Vote WHERE EXTRACT(MONTH FROM date) = ${req.params.date} AND FK_TEAM = ${req.params.team}`,
 //    function (error, results, fields) {
 //     if (error) {
 //       res.statusCode = 500;
@@ -62,7 +78,7 @@ app.get('/api/members/:team', function(req, res) {
 //     }
 //     var arr = JSON.parse(JSON.stringify(results));
 //     var grades = arr.map(a => a.FK_GRADE);
-//     var questions = arr.map(a => a.FK_QUESTION.toString());
+//     var questions = arr.map(a => a.FK_QUESTION.toString());   //ako se cuvaat kako stringovi direktno, ako ne 
 //     var sum = 0;
 //     for (grade in grades) {
 //       sum += grade;
