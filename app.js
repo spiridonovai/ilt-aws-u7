@@ -83,7 +83,8 @@ app.get('/api/questions/:team', function(req, res) {
 //     for (grade in grades) {
 //       sum += grade;
 //     }
-//     console.log(sum);
+//     var avg = sum / grades.length;
+//     console.log(avg);
 //     console.log(questions);
 //     res.send(results);
 //     res.end();
