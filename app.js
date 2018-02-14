@@ -5,6 +5,7 @@ var path = require('path')
 var mysql = require('mysql')
 var cors = require('cors')
 var bodyParser = require('body-parser')
+var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 
 var app = express()
 app.use(cors())
