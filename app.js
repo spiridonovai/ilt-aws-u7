@@ -29,7 +29,7 @@ app.get('/login', function(req, res){
 })
  
 app.get('/', function (req, res) {
-  res.send('Hello lgflf')
+  res.send('Hello test!')
 })
 
 app.get('/name/:name', function (req, res) {
@@ -83,7 +83,7 @@ app.get('/api/member/team/:teamId/questions', function(req, res){
   });
 })
 
-app.post('/api/member/post', function(req, res){
+app.post('/api/member/post/:userId', function(req, res){
   var postData = JSON.stringify(req.body);
   var str = JSON.parse(postData);
   // if (error){
