@@ -5,20 +5,16 @@ var path = require('path')
 var mysql = require('mysql')
 var cors = require('cors')
 var bodyParser = require('body-parser')
-var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 
 var app = express()
-app.use(cors())
+var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS
 
+app.use(redirectToHTTPS([/localhost:(\d{4})/]));
+
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/Scripts', express.static(path.join(__dirname + '/Scripts')));
-
-//problemi so CORS
-// app.use((req, res, next) => {
-//   res.append('Access-Control-Allow-Origin', ['*']);
-//   next();
-// });
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
